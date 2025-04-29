@@ -1,8 +1,9 @@
 package com.testservice.model;
 
 import com.testservice.annotation.Test;
-import com.testservice.annotation.TestClass;
+import com.testservice.annotation.Suite;
 
+import lombok.extern.slf4j.Slf4j;
 import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;
 import org.reflections.scanners.TypeAnnotationsScanner;
@@ -10,6 +11,8 @@ import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -18,7 +21,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
+
 public class Loader {
+    final static Logger logger = LoggerFactory.getLogger(Loader.class);
+
     static final String TEST_DATA_DIR = "testdata";
     static final String TEST_CONFIG_FILE = "global.json";
 
@@ -28,15 +34,15 @@ public class Loader {
         });
     }
 
-    public static List<Map<String, Object>> parseJsonArray(String filePath) throws IOException {
+    public static List<Map<String, String>> parseJsonArray(String filePath) throws IOException {
         String content = new String(Files.readAllBytes(Paths.get(filePath)));
-        return JSON.parseObject(content, new TypeReference<List<Map<String, Object>>>() {
+        return JSON.parseObject(content, new TypeReference<List<Map<String, String>>>() {
         });
     }
 
-    private static List<Map<String, Object>> loadTestData(Class<?> clazz, String className, String methodName) {
+    private static List<Map<String, String>> loadTestData(Class<?> clazz, String className, String methodName) {
         String dataFilePath = String.format("%s/%s/%s.json", TEST_DATA_DIR, className, methodName);
-        List<Map<String, Object>> list = Collections.emptyList();
+        List<Map<String, String>> list = Collections.emptyList();
         URL resourceUrl = clazz.getClassLoader().getResource(dataFilePath);
         if (resourceUrl != null) {
             try {
@@ -45,7 +51,7 @@ public class Loader {
                 throw new RuntimeException(e);
             }
         } else {
-            System.out.println(className + "/" + methodName + " data file not found!");
+            logger.warn("{}/{} data file not found!", className, methodName);
         }
         return list;
     }
@@ -61,15 +67,15 @@ public class Loader {
                 throw new RuntimeException(e);
             }
         } else {
-            System.out.println(className + " config file not found!");
+            logger.warn("{} config file not found!", className);
         }
         return config;
     }
 
     public static List<TestSuite> loadTestCases(String packageName) {
-        System.out.println("==================================== 加载测试用例 ====================================");
+        logger.info("==================================== 加载测试用例 ====================================");
         // 定义注解类
-        Class<TestClass> testClass = TestClass.class;
+        Class<Suite> testClass = Suite.class;
         Class<Test> testMethod = Test.class;
 
         // 创建Reflections实例
@@ -81,47 +87,49 @@ public class Loader {
         Set<Class<?>> annotatedClasses = reflections.getTypesAnnotatedWith(testClass);
 
         List<TestSuite> testSuites = new ArrayList<TestSuite>();
-        TestClass classAnnotation = null;
+        Suite classAnnotation = null;
         List<TestCase> testCases = null;
         for (Class<?> clazz : annotatedClasses) {
             testCases = new ArrayList<TestCase>();
 
             classAnnotation = clazz.getAnnotation(testClass);
-            System.out.println("找到测试类: " + clazz.getName() + " name:" + classAnnotation.name());
+            String suiteName = classAnnotation.name();
+            logger.info("找到测试类: {} name:{}", clazz.getName(), classAnnotation.name());
 
             // 获取类中带有方法注解的方法
             Method[] methods = clazz.getDeclaredMethods();
+            Map<String, Object> config = loadTestConfig(clazz, classAnnotation.name());
             for (Method method : methods) {
                 if (method.isAnnotationPresent(testMethod)) {
                     Test methodAnnotation = method.getAnnotation(testMethod);
-                    System.out.println("找到测试方法: " + method.getName() +
-                            " description:" + methodAnnotation.description() +
-                            " priority:" + methodAnnotation.priority() + " tags:"
-                            + Arrays.toString(methodAnnotation.tags()));
+                    String methodName = method.getName();
+
+                    String description = methodAnnotation.description();
+                    int priority = methodAnnotation.priority();
+                    String author = methodAnnotation.author();
+                    String[] tags = methodAnnotation.tags();
+
+                    logger.info("找到测试方法: {} description:{} priority:{} tags:{}", methodName, description, priority, Arrays.toString(tags));
 
                     // 加载测试数据
-                    List<Map<String, Object>> paramsList = loadTestData(clazz, classAnnotation.name(), method.getName());
+                    List<Map<String, String>> paramsList = loadTestData(clazz, suiteName, methodName);
                     // 加载测试配置（全局数据）
-                    Map<String, Object> config = loadTestConfig(clazz, classAnnotation.name());
+
                     if (!paramsList.isEmpty()) {
                         int dataIndex = 0;
-                        for (Map<String, Object> params : paramsList) {
-                            TestCase testCase = new TestCase(clazz, method, paramsList, config,
-                                    methodAnnotation.description(), methodAnnotation.priority(), methodAnnotation.tags(), dataIndex, classAnnotation.name());
+                        for (Map<String, String> params : paramsList) {
+                            TestCase testCase = new TestCase(clazz, method, paramsList, config,description, priority, tags, dataIndex, suiteName, author);
                             dataIndex += 1;
                             testCases.add(testCase);
                         }
                     } else {
-                        TestCase testCase = new TestCase(clazz, method, paramsList, config,
-                                methodAnnotation.description(), methodAnnotation.priority(), methodAnnotation.tags(), 0, classAnnotation.name());
+                        TestCase testCase = new TestCase(clazz, method, paramsList, config,description, priority, tags,0, suiteName, author);
                         testCases.add(testCase);
                     }
-
                     // 构建测试用例对象
-
                 }
             }
-            TestSuite testSuite = new TestSuite(classAnnotation.name(), testCases);
+            TestSuite testSuite = new TestSuite(classAnnotation.name(), testCases, config);
             testSuites.add(testSuite);
 
         }

@@ -1,5 +1,8 @@
 package com.testservice.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
@@ -8,27 +11,29 @@ import java.lang.reflect.Parameter;
 import java.util.List;
 import java.util.Map;
 
-
 public class TestCase {
-    public String moduleName;
-    Class<?> clazz;
-    Method method;
-    public List<Map<String, Object>> paramsList;
-    int dataIndex;
-    public Map<String, Object> config;
+    final static Logger logger = LoggerFactory.getLogger(TestCase.class);
 
     public String name;
-    String description;
-    int priority;
-    String[] tags;
+    public String suite;
+    public String description;
+    public String author;
+    public int priority;
+    public String[] tags;
+    public List<Map<String, String>> params;
 
-    public TestCase(Class<?> clazz, Method method, List<Map<String, Object>> paramsList,
+    private Class<?> clazz;
+    private Method method;
+    private int dataIndex;
+    private Map<String, Object> config;
+
+    public TestCase(Class<?> clazz, Method method, List<Map<String, String>> params,
                     Map<String, Object> config, String description,
-                    int priority, String[] tags, int dataIndex, String moduleName) {
+                    int priority, String[] tags, int dataIndex, String suite, String author) {
         this.clazz = clazz;
         this.method = method;
 
-        this.paramsList = paramsList;
+        this.params = params;
         this.config = config;
 
         this.name = method.getName();
@@ -36,7 +41,13 @@ public class TestCase {
         this.priority = priority;
         this.tags = tags;
         this.dataIndex = dataIndex;
-        this.moduleName = moduleName;
+        this.suite = suite;
+        this.author = author;
+    }
+
+    public TestData getTestData(int index) {
+        Map<String, String> params = this.params.get(index);
+        return new TestData(name, suite, description, priority, tags, index, params);
     }
 
     public void callMethod(Object instance, Parameter[] parameters) throws Exception {
@@ -46,7 +57,7 @@ public class TestCase {
             method.invoke(instance, config);
 
         } else if (parameters.length == 2) {
-            method.invoke(instance, config, paramsList.get(dataIndex));
+            method.invoke(instance, config, params.get(dataIndex));
         }
     }
 
@@ -59,11 +70,11 @@ public class TestCase {
     public TestCaseResult runTest() {
         TestCaseResult testCaseResult = new TestCaseResult();
         testCaseResult.className = clazz.getName();
-        testCaseResult.methodName = method.getName();
-        testCaseResult.moduleName = moduleName;
+        testCaseResult.method = method.getName();
+        testCaseResult.suite = suite;
 
         testCaseResult.startTime = System.currentTimeMillis();
-        System.out.println("-------- 运行测试用例: " + clazz.getName() + "." + method.getName() + " dataIndex: " + dataIndex + " --------");
+        logger.info("-------- 运行测试用例: {}.{} dataIndex: {} --------", clazz.getName(), method.getName(), dataIndex);
         String status = "pass"; // 0 调用出错， 1，成功，2，失败，3，出错
         String errMsg = "";
 

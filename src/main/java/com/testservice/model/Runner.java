@@ -1,19 +1,26 @@
 package com.testservice.model;
 
 import com.alibaba.fastjson.JSON;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+
 public class Runner {
+    final static Logger logger = LoggerFactory.getLogger(Runner.class);
+
     public static void main(String[] args) {
         List<TestSuite> testSuites = Loader.loadTestCases("com.example");
-
-        System.out.println("==================================== 执行测试 ====================================");
+        logger.info("==================================== 执行测试 ====================================");
         for (TestSuite testSuite: testSuites) {
-            System.out.println("测试：" + testSuite.name);
+            logger.info("测试：{}", testSuite.name);
             TestResult testResult = testSuite.runTest();
-            System.out.println(JSON.toJSONString(testResult));
+            logger.info(JSON.toJSONString(testResult));
         }
+    }
+
+    public void runTestCase(TestCase testCase){
 
     }
 }

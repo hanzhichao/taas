@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class TestCaseResult {
-    String moduleName;
+    String suite;
     String className;
-    String methodName;
+    String method;
     long startTime;
     long endTime;
     String status;

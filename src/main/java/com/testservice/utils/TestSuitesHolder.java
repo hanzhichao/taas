@@ -1,9 +1,13 @@
 package com.testservice.utils;
 
 import com.testservice.annotation.TestService;
+import com.testservice.controller.TestController;
 import com.testservice.model.Loader;
 import com.testservice.model.TestCase;
 import com.testservice.model.TestSuite;
+import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -13,12 +17,15 @@ import java.util.List;
 import java.util.Map;
 
 @Component
+@Getter
 public class TestSuitesHolder implements ApplicationContextAware {
+    final static Logger logger = LoggerFactory.getLogger(TestController.class);
+
     private List<TestSuite> testSuites;
 
 
     public TestSuite getTestSuite(String suiteName) {
-        System.out.println("筛选测试套件：" + suiteName);
+        logger.info("筛选测试套件：{}", suiteName);
         for (TestSuite testSuite: testSuites){
             if (suiteName.equals(testSuite.name)) {
                 return testSuite;
@@ -28,10 +35,10 @@ public class TestSuitesHolder implements ApplicationContextAware {
     }
 
     public TestCase getTestCase(String suiteName, String caseName) {
-        System.out.println("筛选用例：" + suiteName + "/" + caseName);
+        logger.info("筛选用例：{}/{}", suiteName, caseName);
         for (TestSuite testSuite: testSuites){
             if (suiteName.equals(testSuite.name)) {
-                for (TestCase testCase : testSuite.testCases) {
+                for (TestCase testCase : testSuite.testcases) {
                     if (caseName.equals(testCase.name)) {
                         return testCase;
                     }

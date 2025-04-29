@@ -1,11 +1,11 @@
 package com.example;
 
 import com.testservice.annotation.Test;
-import com.testservice.annotation.TestClass;
+import com.testservice.annotation.Suite;
 
 import java.util.Map;
 
-@TestClass(name ="module2")
+@Suite(name ="suite2")
 public class TestClass2 {
     @Test(description = "测试用例2", priority = 2, tags = {})
     public void testSomething2(Map<String, Object> testConfig){

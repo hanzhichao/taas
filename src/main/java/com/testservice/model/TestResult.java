@@ -7,8 +7,7 @@ import java.util.List;
 
 @Data
 public class TestResult {
-    String suiteName;
-
+    String suite;
     int totalRun;
     int passed;
     int failed;
@@ -18,9 +17,6 @@ public class TestResult {
     boolean isSuccess;
     List<TestCaseResult> details;
 
-    public String getSuiteName(){
-        return suiteName;
-    }
 }
 
 
