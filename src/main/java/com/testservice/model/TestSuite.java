@@ -17,7 +17,7 @@ public class TestSuite {
 
     public TestResult runTest() {
         TestResult testResult = new TestResult();
-        testResult.suite = name;
+//        testResult.suite = name;
         testResult.startTime = System.currentTimeMillis();
 
         testResult.isSuccess = true;
