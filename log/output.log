@@ -1937,3 +1937,126 @@ Caused by: java.lang.IndexOutOfBoundsException: Index: 0
 19:30:21.273 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 19:30:21.274 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
 19:30:21.304 [http-nio-8080-exec-1] INFO  c.t.controller.TestController - 筛选测试套件：suite1
+15:03:10.041 [main] INFO  com.example.DemoApplication - Starting DemoApplication using Java 1.8.0_372 on SUPERHINHAN-MB1 with PID 6322 (/Users/superhin/Projects/MyTestService/target/test-classes started by superhin in /Users/superhin/Projects/MyTestService)
+15:03:10.044 [main] INFO  com.example.DemoApplication - No active profile set, falling back to 1 default profile: "default"
+15:03:10.823 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+15:03:10.832 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+15:03:10.834 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+15:03:10.834 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+15:03:10.958 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+15:03:10.958 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 873 ms
+15:03:11.047 [main] INFO  com.testservice.model.Loader - ==================================== 加载测试用例 ====================================
+15:03:11.108 [main] INFO  org.reflections.Reflections - Reflections took 45 ms to scan 1 urls, producing 4 keys and 7 values
+15:03:11.135 [main] INFO  com.testservice.model.Loader - 找到测试类: com.example.TestClass2 name:suite2
+15:03:11.211 [main] INFO  com.testservice.model.Loader - 找到测试方法: testSomething2 description:测试用例2 priority:2 tags:[]
+15:03:11.213 [main] INFO  com.testservice.model.Loader - 找到测试类: com.example.TestClass1 name:suite1
+15:03:11.213 [main] INFO  com.testservice.model.Loader - 找到测试方法: testSomething description:测试用例1 priority:1 tags:[demo]
+15:03:11.214 [main] INFO  com.testservice.model.Loader - 找到测试方法: testSomething3 description:测试用例3 priority:1 tags:[demo]
+15:03:11.214 [main] WARN  com.testservice.model.Loader - suite1/testSomething3 data file not found!
+15:03:11.487 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+15:03:11.511 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+15:03:11.520 [main] INFO  com.example.DemoApplication - Started DemoApplication in 1.814 seconds (JVM running for 2.408)
+15:08:06.620 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+15:08:06.620 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+15:08:06.621 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+15:08:06.653 [http-nio-8080-exec-1] INFO  c.t.controller.TestController - 筛选用例：module1/testSomething
+15:08:06.658 [http-nio-8080-exec-1] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.NullPointerException] with root cause
+java.lang.NullPointerException: null
+	at com.testservice.controller.TestController.runTestCase(TestController.java:84)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1072)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:965)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:529)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:623)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:209)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:168)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:481)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:390)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:928)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1794)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:750)
+15:09:31.913 [main] INFO  com.example.DemoApplication - Starting DemoApplication using Java 1.8.0_372 on SUPERHINHAN-MB1 with PID 7274 (/Users/superhin/Projects/MyTestService/target/test-classes started by superhin in /Users/superhin/Projects/MyTestService)
+15:09:31.917 [main] INFO  com.example.DemoApplication - No active profile set, falling back to 1 default profile: "default"
+15:09:32.641 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+15:09:32.648 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+15:09:32.651 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+15:09:32.651 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+15:09:32.735 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+15:09:32.735 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 772 ms
+15:09:32.820 [main] INFO  com.testservice.model.Loader - ==================================== 加载测试用例 ====================================
+15:09:32.878 [main] INFO  org.reflections.Reflections - Reflections took 45 ms to scan 1 urls, producing 4 keys and 7 values
+15:09:32.885 [main] INFO  com.testservice.model.Loader - 找到测试类: com.example.TestClass2 name:suite2
+15:09:32.886 [main] WARN  com.testservice.model.Loader - suite2 config file not found!
+15:09:32.888 [main] INFO  com.testservice.model.Loader - 找到测试方法: testSomething2 description:测试用例2 priority:2 tags:[]
+15:09:32.888 [main] WARN  com.testservice.model.Loader - suite2/testSomething2 data file not found!
+15:09:32.889 [main] INFO  com.testservice.model.Loader - 找到测试类: com.example.TestClass1 name:suite1
+15:09:32.889 [main] WARN  com.testservice.model.Loader - suite1 config file not found!
+15:09:32.890 [main] INFO  com.testservice.model.Loader - 找到测试方法: testSomething description:测试用例1 priority:1 tags:[demo]
+15:09:32.890 [main] WARN  com.testservice.model.Loader - suite1/testSomething data file not found!
+15:09:32.890 [main] INFO  com.testservice.model.Loader - 找到测试方法: testSomething3 description:测试用例3 priority:1 tags:[demo]
+15:09:32.891 [main] WARN  com.testservice.model.Loader - suite1/testSomething3 data file not found!
+15:09:33.145 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+15:09:33.179 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+15:09:33.189 [main] INFO  com.example.DemoApplication - Started DemoApplication in 1.996 seconds (JVM running for 2.554)
+15:10:01.831 [main] INFO  com.example.DemoApplication - Starting DemoApplication using Java 1.8.0_372 on SUPERHINHAN-MB1 with PID 7350 (/Users/superhin/Projects/MyTestService/target/test-classes started by superhin in /Users/superhin/Projects/MyTestService)
+15:10:01.834 [main] INFO  com.example.DemoApplication - No active profile set, falling back to 1 default profile: "default"
+15:10:02.558 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+15:10:02.565 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+15:10:02.568 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+15:10:02.568 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+15:10:02.643 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+15:10:02.643 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 758 ms
+15:10:02.718 [main] INFO  com.testservice.model.Loader - ==================================== 加载测试用例 ====================================
+15:10:02.771 [main] INFO  org.reflections.Reflections - Reflections took 39 ms to scan 1 urls, producing 4 keys and 7 values
+15:10:02.777 [main] INFO  com.testservice.model.Loader - 找到测试类: com.example.TestClass2 name:module2
+15:10:02.846 [main] INFO  com.testservice.model.Loader - 找到测试方法: testSomething2 description:测试用例2 priority:2 tags:[]
+15:10:02.848 [main] INFO  com.testservice.model.Loader - 找到测试类: com.example.TestClass1 name:module1
+15:10:02.849 [main] INFO  com.testservice.model.Loader - 找到测试方法: testSomething3 description:测试用例3 priority:1 tags:[demo]
+15:10:02.849 [main] WARN  com.testservice.model.Loader - module1/testSomething3 data file not found!
+15:10:02.849 [main] INFO  com.testservice.model.Loader - 找到测试方法: testSomething description:测试用例1 priority:1 tags:[demo]
+15:10:03.085 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+15:10:03.105 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+15:10:03.114 [main] INFO  com.example.DemoApplication - Started DemoApplication in 1.605 seconds (JVM running for 2.155)
+15:10:21.499 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+15:10:21.499 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+15:10:21.500 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+15:10:21.527 [http-nio-8080-exec-1] INFO  c.t.controller.TestController - 筛选用例：module1/testSomething
+15:10:21.528 [http-nio-8080-exec-1] INFO  com.testservice.model.TestCase - -------- 运行测试用例: com.example.TestClass1.testSomething dataIndex: 0 --------

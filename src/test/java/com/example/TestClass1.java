@@ -5,7 +5,7 @@ import org.junit.Assert;
 
 import java.util.Map;
 
-@Suite(name = "suite1")
+@Suite(name = "module1")
 public class TestClass1 {
     @Test(description = "测试用例1", priority = 1, tags = {"demo"}, author = "hzc")
     public void testSomething(Map<String, Object> testConfig, Map<String, Object> params) {

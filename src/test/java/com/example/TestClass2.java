@@ -5,7 +5,7 @@ import com.testservice.annotation.Suite;
 
 import java.util.Map;
 
-@Suite(name ="suite2")
+@Suite(name ="module2")
 public class TestClass2 {
     @Test(description = "测试用例2", priority = 2, tags = {})
     public void testSomething2(Map<String, Object> testConfig){
